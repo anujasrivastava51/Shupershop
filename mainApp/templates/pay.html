@@ -11,6 +11,7 @@
 </div>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
+  var id = "{{id}}"
   var options = {
     "key": "{{api_key}}", // Enter the Key ID generated from the Dashboard
     "name": "SuperShop",
@@ -20,7 +21,7 @@
       // alert(response.razorpay_payment_id);
       // alert(response.razorpay_order_id);
       // alert(response.razorpay_signature)
-      window.open("/payment-success/"+response.razorpay_payment_id+"/"+response.razorpay_order_id+"/"+response.razorpay_signature+"/")
+      window.open("/payment-success/" + id + "/" + response.razorpay_payment_id + "/" + response.razorpay_order_id + "/" + response.razorpay_signature + "/")
     },
     "prefill": {
       "name": "{{User.name}}",

@@ -34,7 +34,7 @@ def addToCartPage(Request):
                 if(str(id) in cart.keys()):
                     item = cart[str(id)]
                     item['qty'] = item['qty']+qty
-                    item['total'] = item['total']+qty*item['price']
+                    item['total'] = item['total']+qty*item['price']  
                     cart[str(id)] = item
                 else:
                     cart.setdefault(str(id),{'productid':id,'name':p.name,'brand':p.brand.name,'color':p.color,'size':p.size,'price':p.finalprice,'qty':qty,'total':qty*p.finalprice,'pic':p.pic1.url})
@@ -317,22 +317,13 @@ def checkoutPage(Request):
                     "displayamount":checkout.total,
                     "api_key":settings.RAZORPAY_API_KEY,
                     "order_id":paymentId,
-                    "User":buyer
+                    "User":buyer,
+                    "id":checkout.id
                 })
         return render(Request,"checkout.html",{'buyer':buyer,'total':total,'shipping':shipping,'subtotal':subtotal,'cart':cart})
     except:
         return HttpResponseRedirect("/admin/")
     
-@login_required(login_url='/login/')
-def paymentSuccessPage(request,rppid,rpoid,rpsid):
-    buyer = Buyer.objects.get(username=request.user)
-    check = Checkout.objects.filter(user=buyer)
-    check=check[::-1]
-    check=check[0]
-    check.rppid=rppid
-    check.paymentstatus=1
-    check.save()
-    return HttpResponseRedirect('/confirmation/')
 
 @login_required(login_url="/login/")
 def rePaymentPage(Request,id):
@@ -350,11 +341,20 @@ def rePaymentPage(Request,id):
             "displayamount":checkout.total,
             "api_key":settings.RAZORPAY_API_KEY,
             "order_id":paymentId,
-            "User":buyer
+            "User":buyer,
+            "id":id
         })
     except:
         return HttpResponseRedirect("/profile/")
        
+@login_required(login_url='/login/')
+def paymentSuccessPage(request,id,rppid,rpoid,rpsid):
+    check = Checkout.objects.get(id=id)
+    check.rppid=rppid
+    check.paymentstatus=1
+    check.save()
+    return HttpResponseRedirect('/confirmation/')
+
 
 @login_required(login_url="/login/")
 def confirmationPage(Request):
