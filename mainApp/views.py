@@ -353,7 +353,7 @@ def paymentSuccessPage(request,id,rppid,rpoid,rpsid):
     check.rppid=rppid
     check.paymentstatus=1
     check.save()
-    return HttpResponseRedirect('/confirmation/'+id+"/")
+    return HttpResponseRedirect('/confirmation/'+str(id)+"/")
 
 
 @login_required(login_url="/login/")
