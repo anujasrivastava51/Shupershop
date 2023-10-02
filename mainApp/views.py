@@ -304,7 +304,7 @@ def checkoutPage(Request):
                 Request.session['cart']={}
 
             if(mode=="COD"):
-                return HttpResponseRedirect("/confirmation")
+                return HttpResponseRedirect("/confirmation/"+str(checkout.id)+"/")
             else:
                 orderAmount = checkout.total*100
                 orderCurrency = "INR"
@@ -360,7 +360,8 @@ def paymentSuccessPage(request,id,rppid,rpoid,rpsid):
 def confirmationPage(Request,id):
     try:
         buyer = Buyer.objects.get(username=Request.user.username)
-        cart = CheckoutProduct.objects.filter(checkout=Checkout.objects.get(id=id))
+        checkout=Checkout.objects.get(id=id)
+        cart = CheckoutProduct.objects.filter(checkout=Checkout)
         subtotal = 0
         shipping = 0
         total = 0
