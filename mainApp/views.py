@@ -353,15 +353,14 @@ def paymentSuccessPage(request,id,rppid,rpoid,rpsid):
     check.rppid=rppid
     check.paymentstatus=1
     check.save()
-    return HttpResponseRedirect('/confirmation/')
+    return HttpResponseRedirect('/confirmation/'+id+"/")
 
 
 @login_required(login_url="/login/")
-def confirmationPage(Request):
+def confirmationPage(Request,id):
     try:
         buyer = Buyer.objects.get(username=Request.user.username)
-        checkout = Checkout.objects.filter(buyer=buyer).order_by("-id").first()
-        cart = CheckoutProduct.objects.filter(checkout=Checkout.objects.get(id=checkout.id))
+        cart = CheckoutProduct.objects.filter(checkout=Checkout.objects.get(id=id))
         subtotal = 0
         shipping = 0
         total = 0
