@@ -351,7 +351,7 @@ def rePaymentPage(Request,id):
 def paymentSuccessPage(request,id,rppid,rpoid,rpsid):
     check = Checkout.objects.get(id=id)
     check.rppid=rppid
-    check.paymentstatus=1
+    check.paymentStatus=1
     check.save()
     return HttpResponseRedirect('/confirmation/'+str(id)+"/")
 
