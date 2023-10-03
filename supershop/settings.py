@@ -134,7 +134,7 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "anujasrivastava51@gmail.com"
 EMAIL_HOST_PASSWORD = "wive insv cxmy ivyg"
-
+ALLOWED_HOSTS = "anuja12.pythonanywhere.com"
 
 
 RAZORPAY_API_KEY= 'rzp_test_NiC9K0pZR1k5as'
