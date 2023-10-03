@@ -348,7 +348,7 @@ def rePaymentPage(Request,id):
         return HttpResponseRedirect("/profile/")
        
 @login_required(login_url='/login/')
-def paymentSuccessPage(request,id,rppid,rpoid,rpsid):
+def paymentSuccessPage(Request,id,rppid,rpoid,rpsid):
     check = Checkout.objects.get(id=id)
     check.rppid=rppid
     check.paymentstatus=1
@@ -361,7 +361,7 @@ def confirmationPage(Request,id):
     try:
         buyer = Buyer.objects.get(username=Request.user.username)
         checkout=Checkout.objects.get(id=id)
-        cart = CheckoutProduct.objects.filter(checkout=Checkout)
+        cart = CheckoutProduct.objects.filter(checkout=checkout)
         subtotal = 0
         shipping = 0
         total = 0
